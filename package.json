@@ -1,0 +1,18 @@
+{
+  "name": "name",
+  "version": "1.0.0",
+  "description": "AI screen assistant desktop app",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test:capture": "node test/test-capture.js",
+    "test:audio": "node test/test-audio.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "electron": "^40.6.1",
+    "node-record-lpcm16": "^1.0.1",
+    "screenshot-desktop": "^1.15.3"
+  }
+}
