@@ -1,5 +1,3 @@
-# [name]
-
 ## Purpose
 Desktop AI screen assistant scaffold for capture, audio, AI calls, overlay rendering, and text-to-speech.
 

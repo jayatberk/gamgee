@@ -10,7 +10,7 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1100,
     height: 700,
-    title: '[name]',
+    title: '[gamgee]',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
@@ -23,10 +23,10 @@ function createWindow() {
     <html>
       <head>
         <meta charset="UTF-8" />
-        <title>[name]</title>
+        <title>[gamgee]</title>
       </head>
       <body>
-        <h1>[name]</h1>
+        <h1>[gamgee]</h1>
         <p>Scaffold only. Features are not implemented yet.</p>
       </body>
     </html>
