@@ -1,5 +1,8 @@
 # Agents Guide
 
+## Meta Rule
+After completing any task that changes architecture, module interfaces, data formats, platform behavior, CI, or testing approach — update this file and `CLAUDE.md` before considering the task done.
+
 ## What This App Does
 Desktop Electron AI screen assistant. The user speaks a question, the app captures their screen, sends both to GPT-4.1 vision, and speaks the response back. The full pipeline runs in a loop.
 

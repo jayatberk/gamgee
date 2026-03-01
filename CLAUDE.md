@@ -13,3 +13,4 @@ Desktop AI screen assistant scaffold for capture, audio, AI calls, overlay rende
 ## Rules
 - Never hardcode API keys.
 - Read `AGENTS.md` for full implementation details, pipeline contracts, testing rules, and what still needs building.
+- After any change to architecture, module interfaces, platform behavior, or testing approach — update `AGENTS.md` and `CLAUDE.md` to reflect the new state.
