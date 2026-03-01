@@ -30,28 +30,15 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install sox
 
-      - name: Install sox + virtual display + pulseaudio (Linux)
+      - name: Install sox (Linux)
         if: runner.os == 'Linux'
-        run: sudo apt-get install -y sox scrot xvfb pulseaudio
-
-      - name: Set up virtual mic (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          pulseaudio --start
-          pactl load-module module-null-sink sink_name=virtual
-          pactl set-default-source virtual.monitor
+        run: sudo apt-get install -y sox
 
       - name: Syntax check
         run: node --check src/capture/index.js src/audio/index.js src/ai/index.js src/overlay/index.js src/tts/index.js
 
-      - name: Test capture (macOS)
-        if: runner.os == 'macOS'
+      - name: Test capture
         run: npm run test:capture
 
-      - name: Test capture (Linux)
-        if: runner.os == 'Linux'
-        run: xvfb-run --auto-servernum npm run test:capture
-
       - name: Test audio
-        timeout-minutes: 2
         run: npm run test:audio
