@@ -5,8 +5,8 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "test:capture": "node test/test-capture.js",
-    "test:audio": "node test/test-audio.js"
+    "test:capture": "node --test --experimental-test-module-mocks test/test-capture.js",
+    "test:audio": "node --test --experimental-test-module-mocks test/test-audio.js"
   },
   "license": "MIT",
   "dependencies": {
