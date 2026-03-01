@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install sox (macOS)
+        if: runner.os == 'macOS'
+        run: brew install sox
+
+      - name: Install sox (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y sox
+
+      - name: Syntax check
+        run: node --check src/capture/index.js src/audio/index.js src/ai/index.js src/overlay/index.js src/tts/index.js
+
+      - name: Test capture
+        run: npm run test:capture
+
+      - name: Test audio
+        run: npm run test:audio
