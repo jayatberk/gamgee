@@ -1,24 +1,28 @@
 const https = require('https');
 
+const messages = [
+  {
+    role: 'system',
+    content: 'You are a helpful desktop AI assistant. The user will share screenshots of their screen and ask questions or request help. Answer concisely and clearly.',
+  },
+];
+
 function callGpt41(imageBase64, prompt) {
-  const body = JSON.stringify({
-    model: 'gpt-4.1',
-    messages: [
+  messages.push({
+    role: 'user',
+    content: [
       {
-        role: 'user',
-        content: [
-          {
-            type: 'image_url',
-            image_url: { url: `data:image/jpeg;base64,${imageBase64}` },
-          },
-          {
-            type: 'text',
-            text: prompt,
-          },
-        ],
+        type: 'image_url',
+        image_url: { url: `data:image/jpeg;base64,${imageBase64}` },
+      },
+      {
+        type: 'text',
+        text: prompt,
       },
     ],
   });
+
+  const body = JSON.stringify({ model: 'gpt-4.1', messages });
 
   return new Promise((resolve, reject) => {
     const req = https.request({
@@ -36,19 +40,31 @@ function callGpt41(imageBase64, prompt) {
       res.on('end', () => {
         const data = JSON.parse(Buffer.concat(chunks).toString());
         if (data.error) {
+          messages.pop();
           reject(new Error(data.error.message));
           return;
         }
-        resolve(data.choices[0].message.content);
+        const reply = data.choices[0].message.content;
+        messages.push({ role: 'assistant', content: reply });
+        resolve(reply);
       });
     });
 
-    req.on('error', reject);
+    req.on('error', (err) => {
+      messages.pop();
+      reject(err);
+    });
+
     req.write(body);
     req.end();
   });
 }
 
+function resetConversation() {
+  messages.splice(1);
+}
+
 module.exports = {
-  callGpt41
+  callGpt41,
+  resetConversation,
 };
